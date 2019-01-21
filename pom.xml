@@ -29,6 +29,18 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
           </goals>
         </execution>
       </executions>
+      <configuration>
+        <archive>
+          <manifest>
+            <addClasspath>true</addClasspath>
+            <mainClass>servermain.PersonManagementServer</mainClass>
+          </manifest>
+        </archive>
+        <outputDirectory>jar</outputDirectory>
+        <descriptorRefs>
+          <descriptorRef>jar-with-dependencies</descriptorRef>
+        </descriptorRefs>
+      </configuration>
     </plugin>
     <plugin>
       <artifactId>maven-compiler-plugin</artifactId>
@@ -67,6 +79,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
         </execution>
       </executions>
     </plugin>
+
   </plugins>
 </build>
 

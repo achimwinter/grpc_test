@@ -4,22 +4,22 @@ import io.grpc.Server;
 import io.grpc.ServerBuilder;
 
 import java.io.IOException;
-import service_impl.ThreadManagementServiceImpl;
+import service_impl.PersonManagementServiceImpl;
 
-public class ThreadManagementServer
+public class PersonManagementServer
 {
   private final Server server;
 
-  public ThreadManagementServer( int port )
+  public PersonManagementServer( int port )
   {
     this.server = ServerBuilder.forPort( port )
-        .addService( new ThreadManagementServiceImpl() )
+        .addService( new PersonManagementServiceImpl() )
         .build( );
   }
 
   public static void main( String[] args ) throws Exception
   {
-    final ThreadManagementServer server = new ThreadManagementServer( 8888 );
+    final PersonManagementServer server = new PersonManagementServer( 8888 );
     server.start( );
     System.out.println( "Server running ..." );
     server.blockUntilShutdown( );
@@ -36,7 +36,7 @@ public class ThreadManagementServer
       public void run( )
       {
         System.err.println( "Shutting down gRPC server since JVM is shutting down" );
-        ThreadManagementServer.this.stop( );
+        PersonManagementServer.this.stop( );
         System.err.println( "Server shut down" );
       }
     } );
