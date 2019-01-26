@@ -2,9 +2,9 @@ package servermain;
 
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
+import service_impl.PersonManagementServiceImpl;
 
 import java.io.IOException;
-import service_impl.PersonManagementServiceImpl;
 
 public class PersonManagementServer
 {

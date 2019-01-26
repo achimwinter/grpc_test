@@ -3,22 +3,25 @@ package clientmain;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.StatusRuntimeException;
-import java.util.Iterator;
-import java.util.concurrent.TimeUnit;
 import proto_generated.PersonManagement;
 import proto_generated.PersonManagement.SearchResponse;
 import proto_generated.PersonManagementServiceGrpc;
-import proto_generated.PersonManagementServiceGrpc.PersonManagementServiceBlockingStub;
 
+import com.google.common.util.concurrent.ListenableFuture;
+
+import java.util.Iterator;
+import java.util.concurrent.TimeUnit;
 
 public class PersonManagementClient {
 
   private final ManagedChannel channel;
-  private final PersonManagementServiceBlockingStub blockingStub;
+  private final PersonManagementServiceGrpc.PersonManagementServiceFutureStub futureStub;
+  private final PersonManagementServiceGrpc.PersonManagementServiceBlockingStub blockingStub;
 
   public PersonManagementClient(final String host, final int port) {
     /* In the following statement, do NOT remove usePlaintext or set it to false. */
     channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext(true).build();
+    futureStub = PersonManagementServiceGrpc.newFutureStub(channel);
     blockingStub = PersonManagementServiceGrpc.newBlockingStub(channel);
   }
 
@@ -40,7 +43,7 @@ public class PersonManagementClient {
 
       System.out.println(
           "------------------------------------SEARCH Person-----------------------");
-      client.searchPerson("Blutwurst");
+      client.searchPerson("Wurst");
       System.out.println(
           "------------------------------------LIST Persons-----------------------");
       client.listAll();
@@ -65,9 +68,9 @@ public class PersonManagementClient {
         .build();
 
     try {
-      final PersonManagement.CreateReply response = blockingStub.createPerson(Person);
-      System.out.println(response.getPerson() + " created");
-    } catch (final StatusRuntimeException e) {
+      final ListenableFuture<PersonManagement.CreateReply> response = futureStub.createPerson(Person);
+      System.out.println(response.get().getPerson() + " created");
+    } catch (final Exception e) {
       e.printStackTrace();
     }
   }
