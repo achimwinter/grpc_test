@@ -7,7 +7,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 <packaging>jar</packaging>
 <properties>
   <protobuf.version>3.2.0</protobuf.version>
-  <grpc.version>1.2.0</grpc.version>
+  <grpc.version>1.53.0</grpc.version>
 </properties>
 
 <build>
